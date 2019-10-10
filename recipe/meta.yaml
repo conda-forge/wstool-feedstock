@@ -1,5 +1,5 @@
 {% set name = "wstool" %}
-{% set version = "0.1.17" %}
+{% set version = "0.1.18" %}
 
 package:
   name: "{{ name|lower }}"
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/vcstools/{{ name }}/archive/{{ version }}.tar.gz
-  sha256: 5f352e0063393231ae18ddd7c8488511a4ebbd045905e5edcd309a056e47e911
+  sha256: f04621acda755a45896db2d3a84131f96cf69905515997637b4568f3fad5c46e
 
 build:
   noarch: python
