@@ -8,11 +8,15 @@ package:
 source:
   url: https://github.com/vcstools/{{ name }}/archive/{{ version }}.tar.gz
   sha256: f04621acda755a45896db2d3a84131f96cf69905515997637b4568f3fad5c46e
+  patches:
+    - console_scripts.patch  # [win]
 
 build:
   noarch: python
   number: 0
   script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+  entry_points:
+    - wstool = wstool.wstool_cli:main  # [win]
 
 requirements:
   host:
@@ -22,10 +26,13 @@ requirements:
     - python
     - pyyaml
     - vcstools >=0.1.38
+    - python-dateutil
 
 test:
   imports:
     - wstool
+  commands:
+    - wstool --help
 
 about:
   home: http://wiki.ros.org/wstool
