@@ -1,0 +1,40 @@
+--- src\wstool\wstool_cli.py
++++ src\wstool\wstool_cli.py
+@@ -183,6 +183,18 @@
+                                           os.getcwd(),
+                                           config_filename=ROSINSTALL_FILENAME)
+             return ws_commands[command](workspace, args)
+ 
+     except KeyboardInterrupt:
+         return 1
++
++
++def main():
++    try:
++        from .common import MultiProjectException
++        sys.exit(wstool_main(sys.argv))
++    except ImportError as exc:
++        sys.exit("ERROR: Cannot find required rosinstall library version, "
++                 "check your installation (also of vcstools) is up-to-date. One frequent cause "
++                 "is that rosinstall 0.5 is still installed in /usr/local/lib.\n%s" % exc)
++    except MultiProjectException as mpe:
++        sys.exit("ERROR in config: %s" % str(mpe))
+--- setup.py
++++ setup.py
+@@ -120,13 +120,15 @@
+       # extras_require allow pip install .[test]
+       extras_require={
+         'test': test_required
+       },
+       # tests_require automatically installed when running python setup.py test
+       tests_require=test_required,
+-      scripts=["scripts/wstool"],
++      entry_points = {
++        'console_scripts': ['wstool=wstool.wstool_cli:main']
++      },
+       author="Tully Foote",
+       author_email="tfoote@osrfoundation.org",
+       url="http://wiki.ros.org/wstool",
+       keywords=["ROS"],
+       classifiers=["Programming Language :: Python",
+                    "Programming Language :: Python :: 2",
