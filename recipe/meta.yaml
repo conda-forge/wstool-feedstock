@@ -31,7 +31,7 @@ test:
   imports:
     - wstool
   commands:
-    - wstool --help  # [not win or py>3]
+    - wstool --help  # [not win or py>=30]
 
 about:
   home: http://wiki.ros.org/wstool
