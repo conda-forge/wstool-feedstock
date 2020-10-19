@@ -1,9 +1,21 @@
---- src\wstool\wstool_cli.py
-+++ src\wstool\wstool_cli.py
-@@ -183,6 +183,18 @@
-                                           os.getcwd(),
-                                           config_filename=ROSINSTALL_FILENAME)
-             return ws_commands[command](workspace, args)
+diff -Naur wstool-0.1.18.orig/setup.py wstool-0.1.18/setup.py
+--- wstool-0.1.18.orig/setup.py	2019-09-23 18:52:47.000000000 -0300
++++ wstool-0.1.18/setup.py	2020-10-19 19:49:49.682882513 -0300
+@@ -123,7 +123,9 @@
+       },
+       # tests_require automatically installed when running python setup.py test
+       tests_require=test_required,
+-      scripts=["scripts/wstool"],
++      entry_points = {
++        'console_scripts': ['wstool=wstool.wstool_cli:main']
++      },
+       author="Tully Foote",
+       author_email="tfoote@osrfoundation.org",
+       url="http://wiki.ros.org/wstool",
+diff -Naur wstool-0.1.18.orig/src/wstool/wstool_cli.py wstool-0.1.18/src/wstool/wstool_cli.py
+--- wstool-0.1.18.orig/src/wstool/wstool_cli.py	2019-09-23 18:52:47.000000000 -0300
++++ wstool-0.1.18/src/wstool/wstool_cli.py	2020-10-19 19:49:25.230600473 -0300
+@@ -186,3 +186,15 @@
  
      except KeyboardInterrupt:
          return 1
@@ -19,22 +31,4 @@
 +                 "is that rosinstall 0.5 is still installed in /usr/local/lib.\n%s" % exc)
 +    except MultiProjectException as mpe:
 +        sys.exit("ERROR in config: %s" % str(mpe))
---- setup.py
-+++ setup.py
-@@ -120,13 +120,15 @@
-       # extras_require allow pip install .[test]
-       extras_require={
-         'test': test_required
-       },
-       # tests_require automatically installed when running python setup.py test
-       tests_require=test_required,
--      scripts=["scripts/wstool"],
-+      entry_points = {
-+        'console_scripts': ['wstool=wstool.wstool_cli:main']
-+      },
-       author="Tully Foote",
-       author_email="tfoote@osrfoundation.org",
-       url="http://wiki.ros.org/wstool",
-       keywords=["ROS"],
-       classifiers=["Programming Language :: Python",
-                    "Programming Language :: Python :: 2",
+\ No newline at end of file
