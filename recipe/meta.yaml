@@ -1,9 +1,10 @@
 {% set name = "wstool" %}
 {% set version = "0.1.18" %}
 
+
 package:
-  name: "{{ name|lower }}"
-  version: "{{ version }}"
+  name: {{ name|lower }}
+  version: {{ version }}
 
 source:
   url: https://github.com/vcstools/{{ name }}/archive/{{ version }}.tar.gz
@@ -13,14 +14,14 @@ source:
 
 build:
   number: 3
-  script: "{{ PYTHON }} -m pip install . --no-deps --ignore-installed -vv "
+  script: {{ PYTHON }} -m pip install . -vv
   entry_points:
     - wstool = wstool.wstool_cli:main  # [win]
 
 requirements:
   host:
-    - pip
     - python
+    - pip
   run:
     - python
     - pyyaml
@@ -31,7 +32,10 @@ test:
   imports:
     - wstool
   commands:
+    - pip check
     - wstool --help  # [not win or py>=30]
+  requires:
+    - pip
 
 about:
   home: http://wiki.ros.org/wstool
