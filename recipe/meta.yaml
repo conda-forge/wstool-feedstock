@@ -13,7 +13,7 @@ source:
     - console_scripts.patch  # [win]
 
 build:
-  number: 5
+  number: 6
   script: {{ PYTHON }} -m pip install . -vv
   entry_points:
     - wstool = wstool.wstool_cli:main  # [win]
